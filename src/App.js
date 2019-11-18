@@ -17,7 +17,14 @@ class App extends React.Component {
 
     try {
       const { setCurrentUser } = this.props;
-      const response = await axios.get('https://cobalt-shop.herokuapp.com/user')
+      const config = {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const response = await axios.get('https://cobalt-shop.herokuapp.com/user', config)
       const user = response.data
       console.log(user)
       if (user.loggedIn === true) {
