@@ -30,7 +30,6 @@ class Directory extends React.Component {
 
     render() {
         const { directories } = this.state; 
-        console.log(directories)
         return directories ? (
             <div className='directory-menu'>
                 {
