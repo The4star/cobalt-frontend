@@ -24,7 +24,7 @@ class App extends React.Component {
         },
       };
 
-      const response = await axios.get('https://cobalt-shop.herokuapp.com/user', config)
+      const response = await axios.get('https://cobalt-shop.herokuapp.com/user', config, {credentials: "same-origin"})
       const user = response.data
       console.log(user)
       if (user.loggedIn === true) {
