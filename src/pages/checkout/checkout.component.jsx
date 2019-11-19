@@ -41,7 +41,7 @@ const CheckoutPage = ({cartItems, total}) => (
         </div>
         <div className='test-warning'>
             <p>
-               <strong> * Please use the following test credit card for payments * </strong>
+               <strong> * Please use the following test credit card when making payments * </strong>
             </p>
             <p>
                 4242 4242 4242 4242 4242
