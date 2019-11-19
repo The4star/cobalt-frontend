@@ -28,7 +28,16 @@ class SignUp extends React.Component {
         }
 
         try {
-            const response = await axios.post('https://cobalt-shop.herokuapp.com/register', {firstName, lastName, email, password})
+
+            let axiosConfig = {
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': 'https://cobalt-shop.herokuapp.com/',
+                  'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+                }
+              }
+            const response = await axios.post('https://cobalt-shop.herokuapp.com/register', {firstName, lastName, email, password}, axiosConfig)
             const data = response.data 
 
             if (data.success === false) {

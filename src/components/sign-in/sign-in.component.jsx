@@ -21,7 +21,17 @@ class SignIn extends React.Component {
         e.preventDefault();
         const { email, password } = this.state;
         try {
-            const response = await axios.post('https://cobalt-shop.herokuapp.com/login', {email, password})
+
+            let axiosConfig = {
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': 'https://cobalt-shop.herokuapp.com/',
+                  'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+                }
+              }
+
+            const response = await axios.post('https://cobalt-shop.herokuapp.com/login', {email, password}, axiosConfig)
             const data = response.data 
             console.log(data)
             if (data.success === false) {
