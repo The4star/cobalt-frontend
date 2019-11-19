@@ -9,7 +9,7 @@ https://github.com/The4Star
 |-----------|
 | Clinton Forster | 
 
-Deployed Site: coming
+Deployed Site: https://cobalt-shop.netlify.com/
 
 ## Purpose 
 
