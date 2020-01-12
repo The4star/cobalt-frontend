@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import './sign-up.styles.scss'
 
+import { localURL, productionURL } from '../../helpers/fetch-urls'
+
 class SignUp extends React.Component {
     constructor(props) {
         super(props)
@@ -37,7 +39,7 @@ class SignUp extends React.Component {
                   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
                 }
               }
-            const response = await axios.post('https://cobalt-shop.herokuapp.com/register', {firstName, lastName, email, password}, axiosConfig)
+            const response = await axios.post(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/register`, {firstName, lastName, email, password}, axiosConfig)
             const data = response.data 
 
             if (data.success === false) {

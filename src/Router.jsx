@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect'
 
 // pages
 import Homepage from './pages/homepage/Homepage.component'
 import ShopPage from './pages/shop/shop.component'
 import CheckoutPage from './pages/checkout/checkout.component'
 
-// selectors
-import {selectCurrentUser} from './redux/user/user.selectors'
+// context 
+import CurrentUserContext from './contexts/current-user/current-user.context'
 
 // components
 import Header from './components/header/header.component'
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 
-const Router = ({currentUser, signOut, getUser}) => (
+const Router = ({signOut, getUser}) => {
+  const currentUser = useContext(CurrentUserContext)
+  return(
     <>
         <Header signOut={signOut}/>
         <Switch>
@@ -25,10 +25,8 @@ const Router = ({currentUser, signOut, getUser}) => (
             <Route exact path='/signin' render={ () => currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage getUser={getUser}/> }  />
         </Switch>
     </>
-)
+  )
+    
+}
 
-const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser 
-})
-
-export default connect(mapStateToProps)(Router);
+export default Router;

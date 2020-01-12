@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import './sign-in.styles.scss';
 
+import { localURL, productionURL } from '../../helpers/fetch-urls'
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -31,7 +33,7 @@ class SignIn extends React.Component {
                 }
               }
 
-            const response = await axios.post('https://cobalt-shop.herokuapp.com/login', {email, password}, axiosConfig)
+            const response = await axios.post(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/login`, {email, password}, axiosConfig)
             const data = response.data 
             console.log(data)
             if (data.success === false) {
