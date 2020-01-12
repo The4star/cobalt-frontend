@@ -1,14 +1,22 @@
 import React from 'react';
 import Router from './Router';
 import axios from 'axios'
-import { connect } from 'react-redux';
 
-import { setCurrentUser } from './redux/user/user.actions'
+import CurrentUserContext from './contexts/current-user/current-user.context'
+
+// urls
+import { localURL, productionURL } from './helpers/fetch-urls'
 
 import './App.css';
 
 class App extends React.Component {
-
+  constructor() {
+    super();
+    
+    this.state = {
+      currentUser: null
+    }
+  }
   componentDidMount = () => {
     this.getUser();
   }
@@ -16,7 +24,6 @@ class App extends React.Component {
   getUser = async () => {
 
     try {
-      const { setCurrentUser } = this.props;
 
       let axiosConfig = {
         withCredentials: true,
@@ -27,11 +34,10 @@ class App extends React.Component {
         }
       }
 
-      const response = await axios.get('https://cobalt-shop.herokuapp.com/user', axiosConfig)
+      const response = await axios.get(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/user`, axiosConfig)
       const user = response.data
-      console.log(user)
       if (user.loggedIn === true) {
-        setCurrentUser(user)
+        this.setState({currentUser: user })
       }
     } catch (error) {
       console.log(error)
@@ -42,9 +48,8 @@ class App extends React.Component {
   signOut = async () => {
 
     try {
-      const { setCurrentUser } = this.props;
-      const response = await axios.get('https://cobalt-shop.herokuapp.com/logOut') 
-      setCurrentUser(null)
+      const response = await axios.get(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/logOut`) 
+      this.setState({ currentUser: null })
       return response.data.loggedOut 
     } catch (error) {
        console.log(error) 
@@ -54,13 +59,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router signOut={this.signOut} getUser={this.getUser} />
+      <CurrentUserContext.Provider value={this.state.currentUser}>
+        <Router signOut={this.signOut} getUser={this.getUser}/>
+      </CurrentUserContext.Provider>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user))
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

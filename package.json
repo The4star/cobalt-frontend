@@ -22,7 +22,7 @@
   "scripts": {
     "client": "cd ../frontend && npm start",
     "server": "cd ../backend && nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn run server\" \"yarn start\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

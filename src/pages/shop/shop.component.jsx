@@ -7,6 +7,10 @@ import CollectionsOverview from '../../components/collections-overview/collectio
 import CollectionPage from '../collection/collection.component'
 import Spinner from '../../components/with-spinner/with-spinner.component'
 
+// urls
+
+import {localURL, productionURL} from '../../helpers/fetch-urls'
+
 class ShopPage extends React.Component {
     constructor(props){
         super(props)
@@ -20,7 +24,7 @@ class ShopPage extends React.Component {
     }
 
     getCollections = async () => {
-        const response = await axios.get('https://cobalt-shop.herokuapp.com/data/collections');
+        const response = await axios.get(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/data/collections`);
         const data = response.data;
 
         this.setState({collections: data});

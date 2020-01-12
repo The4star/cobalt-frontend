@@ -5,6 +5,9 @@ import axios from 'axios'
 import MenuItem from '../menu-item/menu-item.component'
 import Spinner from '../../components/with-spinner/with-spinner.component'
 
+// urls
+
+import {localURL, productionURL } from '../../helpers/fetch-urls'
 import './directory.styles.scss'
 
 class Directory extends React.Component {
@@ -20,10 +23,9 @@ class Directory extends React.Component {
         this.getDirectories()
     }
 
-    componen
-
     getDirectories = async () => {
-        const response = await axios.get('https://cobalt-shop.herokuapp.com/data/directories');
+      console.log(localURL)
+        const response = await axios.get(`${process.env.NODE_ENV === 'production' ? productionURL : localURL}/data/directories`);
         const data =  response.data
         this.setState({directories: data})
     }
